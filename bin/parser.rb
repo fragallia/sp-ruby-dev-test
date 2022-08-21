@@ -2,4 +2,8 @@
 
 require_relative '../lib/command'
 
-Command.new(ARGV).run!
+begin
+  Command.new(ARGV).run!
+rescue CommandError => e
+  puts e.message
+end

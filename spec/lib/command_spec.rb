@@ -6,7 +6,15 @@ RSpec.describe(Command) do
 
     let(:args) { ['-f file_path'] }
 
-    context 'when args empty' do
+    context 'with wrong args' do
+      let(:args) { ['--not-exists param'] }
+
+      it 'outputs help' do
+        expect { run! }.to raise_error(CommandError, %r{invalid option: --not-exists param})
+      end
+    end
+
+    context 'without args' do
       let(:args) { [] }
 
       it 'outputs help' do
