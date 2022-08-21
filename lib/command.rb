@@ -3,6 +3,7 @@
 require 'optparse'
 
 require_relative './logs/formater'
+require_relative './logs/file_parser'
 
 class CommandError < StandardError; end
 
@@ -63,17 +64,9 @@ class Command
   end
 
   def stats
-    @stats ||= logs.each_with_object({}) do |log, res|
+    @stats ||= Logs::FileParser.parsed_logs(options[:file]).each_with_object({}) do |log, res|
       res[log[:path]] ||= {}
       res[log[:path]][log[:ip]] = res[log[:path]][log[:ip]].to_i + 1
-    end
-  end
-
-  def logs
-    return enum_for(:logs) unless block_given?
-
-    File.readlines(options[:file]).each do |line|
-      yield line.strip.split.then { |chunks| { path: chunks[0], ip: chunks[1] } }
     end
   end
 end
