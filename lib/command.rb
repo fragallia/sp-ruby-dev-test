@@ -2,6 +2,8 @@
 
 require 'optparse'
 
+require_relative './logs/formater'
+
 class CommandError < StandardError; end
 
 class Command
@@ -35,13 +37,13 @@ class Command
     puts 'List of webpages with most page views'
     puts
 
-    page_views.each { |item| puts item.join(' ') }
+    Logs::Formater.new(page_views).lines.each { |line| puts line }
 
     puts
     puts 'List of webpages with most unique page views'
     puts
 
-    page_unique_views.each { |item| puts item.join(' ') }
+    Logs::Formater.new(page_unique_views).lines.each { |line| puts line }
   rescue OptionParser::InvalidOption => e
     raise CommandError, e.message
   end

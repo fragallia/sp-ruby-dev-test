@@ -14,12 +14,12 @@ RSpec.describe(Command) do
         [
           'List of webpages with most page views',
           '',
-          '/contact 2 visits',
+          '/contact     2 visits',
           '/help_page/1 1 visits',
           '',
           'List of webpages with most unique page views',
           '',
-          '/contact 2 unique views',
+          '/contact     2 unique views',
           '/help_page/1 1 unique views',
           ''
         ].join("\n")
