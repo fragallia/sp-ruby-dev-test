@@ -70,8 +70,10 @@ class Command
   end
 
   def logs
-    @logs ||= File.readlines(options[:file]).map do |line|
-      line.strip.split.then { |chunks| { path: chunks[0], ip: chunks[1] } }\
+    return enum_for(:logs) unless block_given?
+
+    File.readlines(options[:file]).each do |line|
+      yield line.strip.split.then { |chunks| { path: chunks[0], ip: chunks[1] } }
     end
   end
 end
